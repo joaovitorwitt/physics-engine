@@ -260,3 +260,7 @@ class LengthConversion:
             return f"Error: {ve}"
         except Exception as e:
             return f"Error: {e}"
+        
+
+
+print(LengthConversion.convert_centimeter_to_kilometer(0))

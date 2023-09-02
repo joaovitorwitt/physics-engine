@@ -353,7 +353,7 @@ class MassConversions:
         """
         try:
             if tons < 0:
-                raise ValueError("Negative values ar not allowed")
+                raise ValueError("Negative values are not allowed")
             grams = tons * 100000
             return int(grams)
         

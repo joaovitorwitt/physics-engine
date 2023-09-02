@@ -20,7 +20,6 @@ class TimeConversions:
             1.5
         """
         try:
-            ms = float(ms)
             if ms < 0:
                 raise ValueError("Negative values are not allowed")
             seconds = ms * 0.001
@@ -50,15 +49,14 @@ class TimeConversions:
             2.0
         """
         try:
-            s = float(s)
             if s < 0:
                 raise ValueError("Negative values are not allowed")
             minutes = s / 60
             return minutes
         except ValueError as ve:
-            raise ValueError(f"Error: {ve}")
+            return f"Error: {ve}"
         except TypeError as te:
-            raise TypeError(f"Error: {te}")
+            return f"Error: {te}"
         
 
     def convert_minutes_to_hours(self, minutes):
@@ -66,7 +64,6 @@ class TimeConversions:
         1 hour = 60 minutes
         """
         try:
-            minutes = float(minutes)
             if minutes < 0:
                 raise ValueError("Negative values are not allowed")
             hour = minutes / 60
@@ -342,4 +339,8 @@ class TimeConversions:
             return f"Error: {ve}"
         except TypeError as te:
             return f"Error: {te}"
-        
+    
+
+tc = TimeConversions()
+
+# print(tc.convert_milliseconds_to_seconds("hello"))
