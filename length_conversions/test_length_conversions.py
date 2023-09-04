@@ -1,4 +1,4 @@
-from length_conversions import LengthConversion
+from length_conversions.length_conversions import LengthConversion
 import unittest
 
 

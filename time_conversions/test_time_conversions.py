@@ -1,4 +1,4 @@
-from time_conversions import TimeConversions
+from time_conversions.time_conversions import TimeConversions
 import unittest
 
 tc = TimeConversions()

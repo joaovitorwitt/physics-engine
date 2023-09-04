@@ -3,12 +3,9 @@ for starters building a project like : https://pt.symbolab.com/calculator/physic
 just calculating
 
 """
-from length_conversions import LengthConversion
+from length_conversions.length_conversions import LengthConversion
 
 
-print(LengthConversion.convert_millimeter_to_centimeter(-60))
-# print(LengthConversion.convert_millimeter_to_centimeter('hello'))
-# print(LengthConversion.convert_millimeter_to_centimeter(80))
 
 
 

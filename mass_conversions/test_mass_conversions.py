@@ -1,4 +1,4 @@
-from mass_conversions import MassConversions
+from mass_conversions.mass_conversions import MassConversions
 import unittest
 
 mc = MassConversions()
