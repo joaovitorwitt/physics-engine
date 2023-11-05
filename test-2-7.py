@@ -28,7 +28,7 @@ class Test(Base):
         }
         """
 
-        self.programRef =OpenGLUtils.initializeProgram(vsCode, fsCode)
+        self.programRef = OpenGLUtils.initializeProgram(vsCode, fsCode)
 
 
         # render settings (optional)
