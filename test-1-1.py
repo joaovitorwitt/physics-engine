@@ -3,7 +3,7 @@ from core.openGLUtils import OpenGLUtils
 from core.attribute import Attribute
 from core.uniform import Uniform
 from OpenGL.GL import *
-
+from math import sin, cos
 
 class Test(Base):
     def initialize(self):
@@ -84,27 +84,51 @@ class Test(Base):
 
 
     def update(self):
+        # X and Y coordinates for the first triangle
+        self.translation1.data[0] = 0.5 * -sin(self.time)
+        self.translation1.data[1] = 0.5 * -cos(self.time)
 
-        self.translation1.data[0] += 0.01
-        self.translation2.data[0] += 0.01
-        self.translation3.data[0] += 0.01
-        self.translation4.data[0] += 0.01
-        self.translation5.data[0] += 0.01
+        # constantly update the colors for the first triangle
+        self.baseColor1.data[0] = (sin(self.time) + 1) / 2
+        self.baseColor1.data[1] = (sin(self.time + 3.4) + 1) / 2
+        self.baseColor1.data[2] = (sin(self.time + 6.8) + 1) / 2
 
-        if self.translation1.data[0] > 1.2:
-            self.translation1.data[0] = -1.2
+        # X and Y coordinates for the second triangle
+        self.translation2.data[0] = 0.8 * sin(self.time)
+        self.translation2.data[1] = 0.5 * cos(self.time)
 
-        if self.translation2.data[0] > 1.2:
-            self.translation2.data[0] = -1.2
+        # constantly update the colors for the second triangle
+        self.baseColor2.data[0] = (sin(self.time) + 1) / 2
+        self.baseColor2.data[1] = (sin(self.time + 2.1) + 1) / 2
+        self.baseColor2.data[2] = (sin(self.time + 4.2) + 1) / 2
 
-        if self.translation3.data[0] > 1.2:
-            self.translation3.data[0] = -1.2
+        # X and Y coordinates for the third triangle
+        self.translation3.data[0] = 0.5 * sin(self.time)
+        self.translation3.data[1] = 0.5 * -cos(self.time)
 
-        if self.translation4.data[0] > 1.2:
-            self.translation4.data[0] = -1.2
+        # constantly update the colors for the third triangle
+        self.baseColor3.data[0] = (sin(self.time) + 1) / 2
+        self.baseColor3.data[1] = (sin(self.time + 1.5) + 1) / 2
+        self.baseColor3.data[2] = (sin(self.time + 3) + 1) / 2
 
-        if self.translation5.data[0] > 1.2:
-            self.translation5.data[0] = -1.2
+        # X and Y coordinates for the fourth triangle
+        self.translation4.data[0] = 0.5 * sin(self.time)
+        self.translation4.data[1] = 0.5 * cos(self.time)
+
+        # constantly update the colors for the fourth triangle
+        self.baseColor4.data[0] = (sin(self.time) + 1) / 2
+        self.baseColor4.data[1] = (sin(self.time + 1.2) + 1) / 2
+        self.baseColor4.data[2] = (sin(self.time + 2.4) + 1) / 2
+
+        # X and Y coordinates for the fifth triangle
+        self.translation5.data[0] = 0.5 * -sin(self.time)
+        self.translation5.data[1] = 0.5 * cos(self.time)
+
+        # constantly update the colors for the fifth triangle
+        self.baseColor5.data[0] = (sin(self.time) + 1) / 2
+        self.baseColor5.data[1] = (sin(self.time + 1.7) + 1) / 2
+        self.baseColor5.data[2] = (sin(self.time + 3.4) + 1) / 2
+
 
         glClear(GL_COLOR_BUFFER_BIT)
 
@@ -133,7 +157,7 @@ class Test(Base):
         # draw fifth triangle
         self.translation5.uploadData()
         self.baseColor5.uploadData()
-        glDrawArrays(GL_POLYGON, 0, self.vertexCount)
+        glDrawArrays(GL_TRIANGLES, 0, self.vertexCount)
 
 
 # instantiate class and run program
