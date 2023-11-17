@@ -23,3 +23,47 @@ class Geometry(object):
         attrib =  list(self.attributes.values())[0]
         self.vertexCount = len(attrib.data)
 
+
+    # transform the data in a attribute using a matrix
+    def applyMatrix(self, matrix, variableName="vertexPosition"):
+        
+
+        oldPositionData = self.attributes[variableName].data
+        newPositionData = []
+
+        for oldPos in oldPositionData:
+            # avoid changing the list references
+            newPos = oldPos.copy()
+
+            # add homogeneous fourth coordinate
+            newPos.append(1)
+
+            # multiply by matrix
+            nesPos = matrix @ newPos
+
+            # remove homogeneous coordinate
+            newPos = list(newPos[0:3])
+
+            # add to new data list
+            newPositionData.append(newPos)
+
+        self.attributes[variableName].data = newPositionData
+
+        # new data must be uploaded
+        self.attributes[variableName].uploadData()
+
+
+    # merge data from attributes of other geometry into this object
+    # requires bothe geometries to have attributes with same names
+    def merge(self, otherGeometry):
+
+        for variableName, attributeObject in self.attributes.items():
+            attributeObject.data += otherGeometry.attributes[variableName].data
+
+            # new data must be uploaded
+            attributeObject.uploadData()
+
+        # update the number of vertices
+        self.countVertices()
+
+
