@@ -2,7 +2,6 @@ from core.attribute import Attribute
 
 
 class Geometry(object):
-
     def __init__(self):
 
         # Store Attribute objects, indexed by name of associated variable in shader
@@ -14,20 +13,18 @@ class Geometry(object):
         self.vertexCount = None
 
 
-    def addAttribute(self, dataType, variableName, data):
-        self.attributes[variableName] = Attribute(dataType, data)
-
-
     def countVertices(self):
         # number of vertices may be calculated from the length of any Attribute object's array of data
         attrib =  list(self.attributes.values())[0]
         self.vertexCount = len(attrib.data)
 
 
+    def addAttribute(self, dataType, variableName, data):
+        self.attributes[variableName] = Attribute(dataType, data)
+
+
     # transform the data in a attribute using a matrix
     def applyMatrix(self, matrix, variableName="vertexPosition"):
-        
-
         oldPositionData = self.attributes[variableName].data
         newPositionData = []
 
@@ -39,7 +36,7 @@ class Geometry(object):
             newPos.append(1)
 
             # multiply by matrix
-            nesPos = matrix @ newPos
+            newPos = matrix @ newPos
 
             # remove homogeneous coordinate
             newPos = list(newPos[0:3])

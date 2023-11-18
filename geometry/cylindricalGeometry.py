@@ -12,7 +12,7 @@ class CylindricalGeometry(ParametricGeometry):
             return [ (v*radiusTop + (1-v)*radiusBottom) * sin(u), height * (v - 0.5), (v*radiusTop + (1-v)*radiusBottom) * cos(u)]
         
 
-        super().__init(0, 2*pi, radialSegments, 0, 1, heightSegments, S)
+        super().__init__(0, 2*pi, radialSegments, 0, 1, heightSegments, S)
 
         if closedTop:
             topGeometry = PolygonGeometry(radialSegments, radiusTop)
