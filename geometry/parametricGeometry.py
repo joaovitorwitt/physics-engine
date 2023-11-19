@@ -4,7 +4,7 @@ from geometry.geometry import Geometry
 class ParametricGeometry(Geometry):
 
     def __init__(self, uStart, uEnd, uResolution, vStart, vEnd, vResolution, surfaceFunction):
-
+        super().__init__()
 
         # generate set of points on function
         deltaU = (uEnd - uStart) / uResolution
@@ -40,8 +40,8 @@ class ParametricGeometry(Geometry):
                 # position data
                 pA = positions[xIndex+0][yIndex+0]
                 pB = positions[xIndex+1][yIndex+0]
-                pD = positions[xIndex+0][yIndex+1]
                 pC = positions[xIndex+1][yIndex+1]
+                pD = positions[xIndex+0][yIndex+1]
 
                 positionData += [pA.copy(), pB.copy(), pC.copy(), pA.copy(), pC.copy(), pD.copy()]
 
