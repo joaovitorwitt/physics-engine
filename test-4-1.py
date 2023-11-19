@@ -30,22 +30,31 @@ class Test(Base):
     def initialize(self):
         print("Initializing program....")
 
-
         self.renderer = Renderer()
         self.scene = Scene()
         self.camera = Camera(aspectRatio=800/600)
-        self.camera.setPosition([0, 0, 4])
+        self.camera.setPosition([0, 0, 5])
 
-        geometry = ParametricGeometry()
-        material = SurfaceMaterial()
+        # first box
+        geometry = BoxGeometry()
+        material = SurfaceMaterial({"wireframe": True, "lineWidth": 3, "doubleSize": True})
         self.mesh = Mesh( geometry, material )
+        self.mesh.setPosition([1,1,0])
         self.scene.add(self.mesh)
 
+        # second box
+        geometryTwo = BoxGeometry()
+        materialTwo = SurfaceMaterial({"wireframe": True, "lineWidth": 2, "doubleSize": True})
+        self.meshTwo = Mesh(geometryTwo, materialTwo)
+        self.meshTwo.setPosition([0,0,0])
+        self.scene.add(self.meshTwo)
 
 
     def update(self):
         self.mesh.rotateY(0.02)
         self.mesh.rotateX(0.03)
+
+        self.meshTwo.rotateX(0.032)
         self.renderer.render(self.scene, self.camera)
 
 
@@ -53,4 +62,4 @@ class Test(Base):
 Test(screenSize=[800, 600]).run()
 
 
-# PAGE 188  
+# PAGE 188

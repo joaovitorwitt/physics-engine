@@ -44,7 +44,7 @@ class Renderer(object):
 
 
             # update uniforms stored in material
-            for uniformObject in mesh.material.uniforms.items():
+            for variableName, uniformObject in mesh.material.uniforms.items():
                 uniformObject.uploadData()
 
             # update render settings
