@@ -5,32 +5,11 @@ from core.scene import Scene
 from core.mesh import Mesh
 
 from geometry.sphereGeometry import SphereGeometry
-from geometry.cylinderGeometry import CylinderGeometry
-from geometry.cylindricalGeometry import CylindricalGeometry
-from geometry.coneGeometry import ConeGeometry
-from geometry.ellipsoidGeometry import EllipsoidGeometry
-from geometry.parametricGeometry import ParametricGeometry
-from geometry.planeGeometry import PlaneGeometry
-
-
-from geometry.polygonGeometry import PolygonGeometry
-from geometry.boxGeometry import BoxGeometry
-from geometry.hexagon import HexagonGeometry
-from geometry.rectangleGeometry import RectangleGeometry
-
-
-
-
 
 from material.surfaceMaterial import SurfaceMaterial
-from material.pointMaterial import PointMaterial
-
-from core.openGLUtils import OpenGLUtils
-
-from core.uniform import Uniform
 
 from OpenGL.GL import *
-from math import cos, sin
+from math import cos, sin, pi
 
 
 # scene that consists of a spinning cube
@@ -44,17 +23,30 @@ class Test(Base):
         self.camera = Camera(aspectRatio=800/600)
         self.camera.setPosition([0, 0, 5])
 
-        # first box
-        geometry = EllipsoidGeometry()
-        material = SurfaceMaterial({"wireframe": True, "lineWidth": 3, "doubleSize": True, "useVertexColors": 1})
+
+        # first sphere (we can duplicate this to create more than one sphere)
+        geometry = SphereGeometry(radius=0.4)
+        material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": 1})
         self.mesh = Mesh( geometry, material )
-        # self.mesh.setPosition([1,1,0])
         self.scene.add(self.mesh)
+        self.mesh.setPosition([1, 0, 0])
+
+        # central orbit 
+        sunGeometry = SphereGeometry(radius=1)
+        sunMaterial = SurfaceMaterial({"wireframe": True, "lineWidth":1, "doubleSize" :True})
+        self.meshSun = Mesh(sunGeometry, sunMaterial)
+        self.scene.add(self.meshSun)
+        self.meshSun.setPosition([0, 0, 0])
 
 
     def update(self):
-        self.mesh.rotateY(0.02)
-        self.mesh.rotateX(0.03)
+
+        self.mesh.rotateY(0.009)
+        # self.mesh.rotateX(-0.009)
+
+        self.meshSun.rotateY(0.009)
+
+        self.mesh.translate(0.009 * cos(self.time), 0.009 * sin(self.time), 0)
 
         self.renderer.render(self.scene, self.camera)
 
