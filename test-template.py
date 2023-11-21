@@ -12,7 +12,6 @@ from OpenGL.GL import *
 from math import cos, sin, pi
 
 
-# scene that consists of a spinning cube
 class Test(Base):
 
     def initialize(self):
@@ -31,28 +30,10 @@ class Test(Base):
         self.scene.add(self.mesh)
         self.mesh.setPosition([0, 0, 0])
 
-        # central orbit 
-        # sunGeometry = SphereGeometry(radius=1)
-        # sunMaterial = SurfaceMaterial({"wireframe": True, "lineWidth":1, "doubleSize" :True})
-        # self.meshSun = Mesh(sunGeometry, sunMaterial)
-        # self.scene.add(self.meshSun)
-        # self.meshSun.setPosition([0, 0, 0])
-
 
     def update(self):
-
-        # self.mesh.rotateY(0.009)
-        # self.mesh.rotateX(-0.009)
-
-        # self.meshSun.rotateY(0.009)
-
-        # self.mesh.translate(0.03 * cos(self.time), 0.03 * sin(self.time), 0)
-
         self.renderer.render(self.scene, self.camera)
 
 
 # instantiate class and run the program
 Test(screenSize=[800, 600]).run()
-
-
-# PAGE 188
