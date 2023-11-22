@@ -37,10 +37,28 @@ class Test(Base):
         grid.rotateX(-pi/2)
         self.scene.add(grid)
 
+        # center object spinning on its own axis
+        geometry = SphereGeometry(radius=2)
+        material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
+        self.mesh = Mesh(geometry, material)
+        self.scene.add(self.mesh)
+
+        # secondary sphere
+        orbitingSphere = SphereGeometry(radius=1)
+        orbitingMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1})
+        self.secondaryMesh = Mesh(orbitingSphere, orbitingMaterial)
+        self.secondaryMesh.setPosition([0,0,0])
+        self.scene.add(self.secondaryMesh)
 
 
     def update(self):
         self.rig.update(self.input, self.deltaTime)
+
+
+        # make smaller sphere orbitate the larger sphere
+        self.secondaryMesh.translate(0.075*cos(self.time), 0, 0.075*sin(self.time))
+
+        self.mesh.rotateY(0.009)
         self.renderer.render(self.scene, self.camera)
 
 
