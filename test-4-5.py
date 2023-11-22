@@ -65,8 +65,7 @@ class Test(Base):
         self.mesh.material.uniforms["time"].data = self.time
 
         self.mesh.rotateX(0.009)
-        self.mesh.rotateY(0.009)
-        self.mesh.rotateZ(-0.009)
+        
 
         self.renderer.render(self.scene, self.camera)
 
