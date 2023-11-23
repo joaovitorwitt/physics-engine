@@ -33,33 +33,40 @@ class Test(Base):
         axes = AxesHelper(axisLength=2)
         self.scene.add(axes)
 
-        grid = GridHelper(size=20, gridColor=[1,1,1], centerColor=[1,1,0])
+        grid = GridHelper(divisions=20, size=20, gridColor=[1,1,1], centerColor=[1,1,0])
         grid.rotateX(-pi/2)
         self.scene.add(grid)
 
         # center object spinning on its own axis
-        geometry = SphereGeometry(radius=2)
-        material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
-        self.mesh = Mesh(geometry, material)
-        self.scene.add(self.mesh)
+        # geometry = SphereGeometry(radius=2)
+        # material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
+        # self.mesh = Mesh(geometry, material)
+        # self.scene.add(self.mesh)
 
         # secondary sphere
         orbitingSphere = SphereGeometry(radius=1)
-        orbitingMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1})
+        orbitingMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
         self.secondaryMesh = Mesh(orbitingSphere, orbitingMaterial)
         self.secondaryMesh.setPosition([0,0,0])
         self.scene.add(self.secondaryMesh)
 
+        self.actualTime = 0.03
+        self.acceleration = 0.02
+
+        self.xMovement = 0
 
     def update(self):
         self.rig.update(self.input, self.deltaTime)
 
+        self.xMovement += self.acceleration * self.actualTime
+        print(f"{self.xMovement:.2f} units/second")
+        
 
-        # make smaller sphere orbitate the larger sphere
-        self.secondaryMesh.translate(0.075*cos(self.time), 0, 0.075*sin(self.time))
-        self.secondaryMesh.rotateY(-0.001)
+        # displacement testing with acceleration
+        self.secondaryMesh.translate(self.xMovement, 0, 0)
 
-        self.mesh.rotateY(0.009)
+
+        # self.mesh.rotateY(0.009)
         self.renderer.render(self.scene, self.camera)
 
 
