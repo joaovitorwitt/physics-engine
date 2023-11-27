@@ -9,12 +9,13 @@ from geometry.sphereGeometry import SphereGeometry
 from material.surfaceMaterial import SurfaceMaterial
 
 from OpenGL.GL import *
-from math import cos, sin, pi
+from math import cos, sin, pi, pow
 
 from extras.axisHelper import AxesHelper
 from extras.gridHelper import GridHelper
 from extras.movementRig import MovementRig
 
+import time
 
 class Test(Base):
 
@@ -27,7 +28,8 @@ class Test(Base):
 
         self.rig = MovementRig()
         self.rig.add(self.camera)
-        self.rig.setPosition([0.5, 1, 5])
+        # self.rig.setPosition([0.5, 1, 5])
+        self.rig.setPosition([3, 5, 10])
         self.scene.add(self.rig)
 
         axes = AxesHelper(axisLength=2)
@@ -37,36 +39,43 @@ class Test(Base):
         grid.rotateX(-pi/2)
         self.scene.add(grid)
 
-        # center object spinning on its own axis
-        # geometry = SphereGeometry(radius=2)
-        # material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
-        # self.mesh = Mesh(geometry, material)
-        # self.scene.add(self.mesh)
+        # constant acceleration sphere
+        constantAcceleration = SphereGeometry(radius=1)
+        constantMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
+        self.constantMesh = Mesh(constantAcceleration, constantMaterial)
+        self.constantMesh.setPosition([-20, 2, -4])
+        self.scene.add(self.constantMesh)
 
-        # secondary sphere
-        orbitingSphere = SphereGeometry(radius=1)
-        orbitingMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
-        self.secondaryMesh = Mesh(orbitingSphere, orbitingMaterial)
-        self.secondaryMesh.setPosition([0,0,0])
-        self.scene.add(self.secondaryMesh)
+        # increasing acceleration sphere
+        increasingAcceleration = SphereGeometry(radius=1)
+        increasingMaterial = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": True})
+        self.increasingMesh = Mesh(increasingAcceleration, increasingMaterial)
+        self.increasingMesh.setPosition([-20, 2, 4])
+        self.scene.add(self.increasingMesh)
 
-        self.actualTime = 0.03
-        self.acceleration = 0.02
 
-        self.xMovement = 0
+        # velocity formula = distance / time (its actually delta)
+        # acceleration formula = velocity / time (also delta)
+        self.distance = 1
+        self.time = 100
+        self.constantAcceleration = self.distance / self.time
+        self.increasingAcceleration = 0
+
 
     def update(self):
         self.rig.update(self.input, self.deltaTime)
 
-        self.xMovement += self.acceleration * self.actualTime
-        print(f"{self.xMovement:.2f} units/second")
-        
+        # make spheres orbit their own axis
+        # self.constantMesh.rotateY(0.009)
+        # self.increasingMesh.rotateY(0.009)
 
-        # displacement testing with acceleration
-        self.secondaryMesh.translate(self.xMovement, 0, 0)
+        self.increasingAcceleration += self.constantAcceleration / self.time
+        # print(f"{self.increasingAcceleration:.2f} units/second")
 
+        # we could consider these values the actual velocity
+        self.increasingMesh.translate(self.increasingAcceleration, 0, 0)
+        self.constantMesh.translate(self.constantAcceleration, 0, 0)
 
-        # self.mesh.rotateY(0.009)
         self.renderer.render(self.scene, self.camera)
 
 
