@@ -22,6 +22,10 @@ class Texture(object):
         # overwrite default property values
         self.setProperties(properties)
 
+        if fileName is not None:
+            self.loadImage(fileName)
+            self.uploadData()
+
 
     # load image from file
     def loadImage(self, fileName):
