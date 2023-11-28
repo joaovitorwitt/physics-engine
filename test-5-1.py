@@ -6,13 +6,9 @@ from core.mesh import Mesh
 from core.texture import Texture
 from material.textureMaterial import TextureMaterial
 
-from geometry.sphereGeometry import SphereGeometry
-
-from material.surfaceMaterial import SurfaceMaterial
+from geometry.rectangleGeometry import RectangleGeometry
 
 from OpenGL.GL import *
-from math import cos, sin, pi
-
 
 
 class Test(Base):
@@ -23,12 +19,12 @@ class Test(Base):
         self.renderer = Renderer()
         self.scene = Scene()
         self.camera = Camera(aspectRatio=800/600)
-        self.camera.setPosition([0, 0, 5])
+        self.camera.setPosition([0, 0, 2])
 
 
-        # first sphere (we can duplicate this to create more than one sphere)
-        geometry = SphereGeometry(radius=0.4)
-        material = SurfaceMaterial({"wireframe": True, "lineWidth": 1, "doubleSize": True, "useVertexColors": 1})
+        geometry = RectangleGeometry()
+        grid = Texture("images/grid.jpg")
+        material = TextureMaterial(grid)
         self.mesh = Mesh( geometry, material )
         self.scene.add(self.mesh)
         self.mesh.setPosition([0, 0, 0])

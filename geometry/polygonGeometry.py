@@ -13,6 +13,9 @@ class PolygonGeometry(Geometry):
         colorData = []
 
 
+        uvData = []
+        uvCenter = [0.5, 0.5]
+
         for n in range(sides):
             positionData.append([0,0,0])
             positionData.append([radius * cos(n * A), radius * sin(n * A), 0])
@@ -22,6 +25,12 @@ class PolygonGeometry(Geometry):
             colorData.append([1,0,0])
             colorData.append([0,0,1])
 
+            uvData.append(uvCenter)
+            uvData.append([cos(n*A) * 0.5 + 0.5, sin(n*A) * 0.5 + 0.5])
+            uvData.append([cos((n+1) * A) * 0.5 + 0.5, sin((n+1) * A) * 0.5 + 0.5])
+
+
+        self.addAttribute("vec2", "vertexUV", uvData)
         self.addAttribute("vec3", "vertexPosition", positionData)
         self.addAttribute("vec3", "vertexColor", colorData)
         self.countVertices()

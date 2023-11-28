@@ -27,8 +27,13 @@ class BoxGeometry(Geometry):
                         P4, P5, P7, P4, P7, P6,
                         P1, P0, P2, P1, P2, P3]
 
-        colorData = [C1] * 6 + [C2] * 6 + [C3] * 6 + [C4] * 6 + [C5] * 6 + [C6] * 6 
+        colorData = [C1] * 6 + [C2] * 6 + [C3] * 6 + [C4] * 6 + [C5] * 6 + [C6] * 6
 
+        # texture coordinates
+        T0, T1, T2, T3 = [0,0], [1,0], [0,1], [1,1]
+        uvData = [T0,T1,T3, T0,T3,T2] * 6
+
+        self.addAttribute("vec2", "vertexUV", uvData)
         self.addAttribute("vec3", "vertexPosition", positionData)
         self.addAttribute("vec3", "vertexColor", colorData)
         self.countVertices()
