@@ -79,7 +79,7 @@ class Matrix(object):
     
 
     @staticmethod
-    def makeLookAt(target, position):
+    def makeLookAt(position, target):
         worldUp = [0, 1, 0]
         forward = subtract(target, position)
         right = cross(forward, worldUp)
@@ -94,11 +94,11 @@ class Matrix(object):
         up = cross(right, forward)
 
         # all vectors should have length 1
-        forward = numpy.divide(forward, norm(forward))
-        right = numpy.divide(right, norm(right))
-        up = numpy.divide(up, norm(up))
+        forward = divide(forward, norm(forward))
+        right = divide(right, norm(right))
+        up = divide(up, norm(up))
 
         return numpy.array([[right[0], up[0], -forward[0], position[0]],
                             [right[1], up[1], -forward[1], position[1]],
                             [right[2], up[2], -forward[2], position[2]],
-                            [0,0,0,1]]).astype(float)
+                            [0, 0, 0, 1]])

@@ -12,10 +12,6 @@ from extras.movementRig import MovementRig
 from geometry.rectangleGeometry import RectangleGeometry
 from geometry.boxGeometry import BoxGeometry
 
-from geometry.sphereGeometry import SphereGeometry
-
-from material.surfaceMaterial import SurfaceMaterial
-
 from OpenGL.GL import *
 from math import cos, sin, pi
 
@@ -48,7 +44,7 @@ class Test(Base):
         
         labelMaterial = TextureMaterial(labelTexture)
         labelGeometry = RectangleGeometry(width=1, height=0.5)
-        labelGeometry.applyMatrix(Matrix.makeRotationY(3.14))
+        labelGeometry.applyMatrix(Matrix.makeRotationY(pi))
         self.label = Mesh(labelGeometry, labelMaterial)
         self.label.setPosition([0,1,0])
         self.scene.add(self.label)
@@ -62,9 +58,9 @@ class Test(Base):
 
 
     def update(self):
-        self.renderer.render(self.scene, self.camera)
         self.rig.update(self.input, self.deltaTime)
-        self.label.lookAt(self.camera.getWorldPosition())
+        self.label.lookAt(self.camera.getWorldPosition()) # problem lies here (if we remove this line the sign works)
+        self.renderer.render(self.scene, self.camera)
 
 
 # instantiate class and run the program
