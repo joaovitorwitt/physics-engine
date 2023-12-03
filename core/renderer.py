@@ -1,6 +1,6 @@
 from OpenGL.GL import *
 from core.mesh import Mesh
-
+import pygame
 
 class Renderer(object):
 
@@ -11,8 +11,20 @@ class Renderer(object):
         glEnable(GL_MULTISAMPLE)
         glClearColor(clearColor[0], clearColor[1], clearColor[2], 1)
 
+        self.windowSize = pygame.display.get_surface().get_size()
 
-    def render(self, scene, camera, clearColor=True, clearDepth=True):
+
+    def render(self, scene, camera, clearColor=True, clearDepth=True, renderTarget=None):
+
+        # activate render target
+        if (renderTarget == None):
+            # set render target to window
+            glBindFramebuffer(GL_FRAMEBUFFER, 0)
+            glViewport(0, 0, self.windowSize[0], self.windowSize[1])
+        else:
+            # set render target properties
+            glBindFramebuffer(GL_FRAMEBUFFER, renderTarget.framebufferRef)
+            glViewport(0, 0, renderTarget.width, renderTarget.height)
 
         # clear color and depth buffers
         if clearColor:
