@@ -12,10 +12,13 @@ class Renderer(object):
         glClearColor(clearColor[0], clearColor[1], clearColor[2], 1)
 
 
-    def render(self, scene, camera):
+    def render(self, scene, camera, clearColor=True, clearDepth=True):
 
         # clear color and depth buffers
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        if clearColor:
+            glClear(GL_COLOR_BUFFER_BIT)
+        if clearDepth:
+            glClear(GL_DEPTH_BUFFER_BIT)
 
         # update camera view (calculate inverse)
         camera.updateViewMatrix()

@@ -5,7 +5,6 @@ from core.scene import Scene
 from core.mesh import Mesh
 from core.texture import Texture
 from material.textureMaterial import TextureMaterial
-
 from core.matrix import Matrix
 from extras.textTexture import TextTexture
 from extras.movementRig import MovementRig
