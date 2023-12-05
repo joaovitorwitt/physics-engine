@@ -40,7 +40,21 @@ class ParametricGeometry(Geometry):
             normal = numpy.cross(v1, v2)
             normal = normal / numpy.linalg.norm(normal)
             return normal
-        
+
+        vertexNormals = []
+        for uIndex in range(uResolution + 1):
+            vArray = []
+            for vIndex in range(vResolution + 1):
+                u = uStart + uIndex * deltaU
+                v = vStart + vIndex * deltaV
+                h = 0.0001
+                P0 = surfaceFunction(u, v)
+                P1 = surfaceFunction(u + h, v)
+                P2 = surfaceFunction(u, v + h)
+                normalVector = calcNormal(P0, P1, P2)
+                vArray.append(normalVector)
+            vertexNormals.append(vArray)
+
         # store vertex data
         positionData = []
         colorData = []
@@ -48,6 +62,9 @@ class ParametricGeometry(Geometry):
         # default vertex colors
         C1, C2, C3 = [1, 0, 0], [0, 1, 0], [0, 0, 1]
         C4, C5, C6 = [0, 1, 1], [1, 0, 1], [1, 1, 0]
+
+        vertexNormalData = []
+        faceNormalData = []
 
         # group vertex data into triangles
         # note: copy() is necessary to avoid storing references
@@ -73,6 +90,20 @@ class ParametricGeometry(Geometry):
                 uvC = uvs[xIndex+1][yIndex+1]
                 uvData += [uvA,uvB,uvC, uvA,uvC,uvD]
 
+                # vertex normal data
+                nA = vertexNormals[xIndex + 0][yIndex + 0]
+                nB = vertexNormals[xIndex + 1][yIndex + 0]
+                nD = vertexNormals[xIndex + 0][yIndex + 1]
+                nC = vertexNormals[xIndex + 1][yIndex + 1]
+                vertexNormalData += [nA,nB,nC, nA,nC,nD]
+
+                # face normal vectors 
+                fn0 = calcNormal(pA, pB, pC)
+                fn1 = calcNormal(pA, pC, pD)
+                faceNormalData += [fn0,fn0,fn0, fn1,fn1,fn1]
+
+        self.addAttribute("vec3", "vertexNormal", vertexNormalData)
+        self.addAttribute("vec3", "faceNormal", faceNormalData)
 
         self.addAttribute("vec2", "vertexUV", uvData)
         self.addAttribute("vec3", "vertexPosition", positionData)
