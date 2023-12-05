@@ -1,4 +1,6 @@
 from core.matrix import Matrix
+import numpy
+
 
 class Object3D(object):
 
@@ -99,3 +101,23 @@ class Object3D(object):
 
     def lookAt(self, targetPosition):
         self.transform = Matrix.makeLookAt(self.getWorldPosition(), targetPosition)
+
+
+    # return 3x3 submatrix with rotation data
+    def getRotationMatrix(self):
+        return numpy.array([self.transform[0][0:3],
+                            self.transform[1][0:3],
+                            self.transform[2][0:3]])
+    
+    def getDirection(self):
+        forward = numpy.array([0,0,-1])
+        return list(self.getRotationMatrix() @ forward)
+    
+
+    def setDirection(self, direction):
+        position = self.getPosition()
+        targetPosition = [position[0] + direction[0],
+                          position[1] + direction[1],
+                          position[2] + direction[2]]
+        
+        self.lookAt(targetPosition)

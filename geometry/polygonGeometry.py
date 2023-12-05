@@ -12,9 +12,12 @@ class PolygonGeometry(Geometry):
         positionData = []
         colorData = []
 
-
         uvData = []
         uvCenter = [0.5, 0.5]
+
+        # normal vectors
+        normalData = []
+        normalVector = [0,0,1]
 
         for n in range(sides):
             positionData.append([0,0,0])
@@ -29,6 +32,13 @@ class PolygonGeometry(Geometry):
             uvData.append([cos(n*A) * 0.5 + 0.5, sin(n*A) * 0.5 + 0.5])
             uvData.append([cos((n+1) * A) * 0.5 + 0.5, sin((n+1) * A) * 0.5 + 0.5])
 
+            normalData.append(normalVector)
+            normalData.append(normalVector)
+            normalData.append(normalVector)
+
+
+        self.addAttribute("vec3", "vertexNormal", normalData)
+        self.addAttribute("vec3", "faceNormal", normalData)
 
         self.addAttribute("vec2", "vertexUV", uvData)
         self.addAttribute("vec3", "vertexPosition", positionData)

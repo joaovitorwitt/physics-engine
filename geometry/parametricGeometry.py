@@ -1,5 +1,5 @@
 from geometry.geometry import Geometry
-
+import numpy
 
 class ParametricGeometry(Geometry):
 
@@ -32,6 +32,14 @@ class ParametricGeometry(Geometry):
                 v = vIndex/vResolution
                 vArray.append([u, v])
             uvs.append(vArray)
+
+
+        def calcNormal(P0, P1, P2):
+            v1 = numpy.array(P1) - numpy.array(P0)
+            v2 = numpy.array(P2) - numpy.array(P0)
+            normal = numpy.cross(v1, v2)
+            normal = normal / numpy.linalg.norm(normal)
+            return normal
         
         # store vertex data
         positionData = []
