@@ -33,13 +33,13 @@ class ParametricGeometry(Geometry):
                 vArray.append([u, v])
             uvs.append(vArray)
 
-
         def calcNormal(P0, P1, P2):
             v1 = numpy.array(P1) - numpy.array(P0)
             v2 = numpy.array(P2) - numpy.array(P0)
             normal = numpy.cross(v1, v2)
             normal = normal / numpy.linalg.norm(normal)
             return normal
+
 
         vertexNormals = []
         for uIndex in range(uResolution + 1):
@@ -68,6 +68,8 @@ class ParametricGeometry(Geometry):
 
         # group vertex data into triangles
         # note: copy() is necessary to avoid storing references
+
+        
 
         for xIndex in range(uResolution):
             for yIndex in range(vResolution):
@@ -102,10 +104,13 @@ class ParametricGeometry(Geometry):
                 fn1 = calcNormal(pA, pC, pD)
                 faceNormalData += [fn0,fn0,fn0, fn1,fn1,fn1]
 
-        self.addAttribute("vec3", "vertexNormal", vertexNormalData)
-        self.addAttribute("vec3", "faceNormal", faceNormalData)
+
 
         self.addAttribute("vec2", "vertexUV", uvData)
         self.addAttribute("vec3", "vertexPosition", positionData)
         self.addAttribute("vec3", "vertexColor", colorData)
+
+        self.addAttribute("vec3", "vertexNormal", vertexNormalData)
+        self.addAttribute("vec3", "faceNormal", faceNormalData)
+        
         self.countVertices()

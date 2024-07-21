@@ -43,7 +43,7 @@ class FlatMaterial(Material):
             }
             else if (light.lightType == 3) // point light
             {
-                lightDirection = normalize(pointPosition - lightPosition);
+                lightDirection = normalize(pointPosition - light.position);
                 float distance = length(light.position - pointPosition);
                 attenuation = 1.0 / (light.attenuation[0] + light.attenuation[1] * distance + light.attenuation[2] * distance * distance);
             }

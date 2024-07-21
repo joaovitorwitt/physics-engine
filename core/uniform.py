@@ -4,10 +4,10 @@ class Uniform(object):
     def __init__(self, dataType, data):
         # type of data:
         # int, bool, float, vec2, vec3, vec4
-        self.dataType = dataType
+        self._dataType = dataType
 
         # data to be sent to uniform variable
-        self.data = data
+        self._data = data
 
         # reference for variable location in program
         self.variableRef = None
