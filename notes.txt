@@ -1,0 +1,5 @@
+For running C files:
+
+--> gcc hello.c -o executable
+
+--> ./executable.exe
