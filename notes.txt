@@ -3,3 +3,18 @@ For running C files:
 --> gcc hello.c -o executable
 
 --> ./executable.exe
+
+
+
+--> runnig  new structure
+
+gcc src/main.c src/glad.c -Iinclude -lglfw -lGL -ldl -lm -lpthread -o app
+
+
+-- c programming book
+
+page 12
+
+-- game engine book
+
+page 40
