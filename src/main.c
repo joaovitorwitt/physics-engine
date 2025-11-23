@@ -1,6 +1,6 @@
+#include <stdio.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <stdio.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -8,7 +8,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 int main() {
     if (!glfwInit()) {
-        printf("Failed to initialize GLFW\n");
+        fprintf(stderr, "Failed to initialize GLFW\n");
         return -1;
     }
 
@@ -16,25 +16,23 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Window", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL Starter", NULL, NULL);
     if (!window) {
-        printf("Failed to create window\n");
+        fprintf(stderr, "Failed to create GLFW window\n");
         glfwTerminate();
         return -1;
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        printf("Failed to initialize GLAD\n");
+        fprintf(stderr, "Failed to initialize GLAD\n");
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
     while (!glfwWindowShouldClose(window)) {
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.1f, 0.2f, 0.3f, 1.0f); // Dark bluish background
         glClear(GL_COLOR_BUFFER_BIT);
 
         glfwSwapBuffers(window);
